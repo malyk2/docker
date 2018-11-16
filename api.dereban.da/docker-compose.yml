@@ -1,0 +1,64 @@
+version: '2'
+services:
+    web:
+        build:
+            context: ./
+            dockerfile: deploy/web.docker
+        volumes:
+            - /media/d/OpenServer/domains/api.dereban.da/:/var/www
+        ports:
+            - "80:80"
+        links:
+            - app
+        extra_hosts:
+            - "api.dereban.dda:172.24.0.1"
+    app:
+        container_name: apiderebanda_app_1
+        build:
+            context: ./
+            dockerfile: deploy/app.docker
+        volumes:
+            - /media/d/OpenServer/domains/api.dereban.da/:/var/www
+        links:
+            - database
+            - mailhog
+            - cache
+        environment:
+            - "DB_PORT=3306"
+            - "DB_HOST=database"
+            - "REDIS_PORT=6379"
+            - "REDIS_HOST=cache"
+        extra_hosts:
+            - "api.dereban.dda:172.24.0.1"
+    # cron:
+    #     build:
+    #         context: ./
+    #         dockerfile: deploy/cron.docker
+    #     volumes:
+    #         - /media/d/OpenServer/domains/api.dereban.da/:/var/www
+    #     links:
+    #         - database
+    #     environment:
+    #         - "DB_PORT=3306"
+    #         - "DB_HOST=database"
+    #         - "REDIS_PORT=6379"
+    #         - "REDIS_HOST=cache"
+    database:
+        build:
+            context: ./
+            dockerfile: deploy/database.docker
+        environment:
+            - "MYSQL_ROOT_PASSWORD=secret"
+            - "MYSQL_DATABASE=db"
+        ports:
+            - "33061:3306"
+    cache:
+        image: redis:3.0
+        ports:
+            - "63791:6379"
+    mailhog:
+            build:
+                context: ./
+                dockerfile: deploy/mailhog.docker
+            ports:
+                - "8025:8025"

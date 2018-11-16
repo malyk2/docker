@@ -1,0 +1,2 @@
+* * * * * php /var/www/artisan schedule:run >> /var/log/cron.log
+

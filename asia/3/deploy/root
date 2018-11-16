@@ -1,0 +1,5 @@
+* * * * * root php /var/www/artisan schedule:run >> /dev/null 2>&1
+* * * * * root echo "Hello world" >> /var/log/cron.log 2>&1
+* * * * * root php -v >> /var/log/cron.log
+
+

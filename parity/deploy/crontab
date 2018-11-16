@@ -1,0 +1,3 @@
+
+* * * * * /usr/local/bin/php /var/www/artisan schedule:run >> /var/log/test.cron.log
+* * * * * echo "TEST CRON" >> /var/log/test.cron.log

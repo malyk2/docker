@@ -1,0 +1,25 @@
+version: "2"
+
+services:
+  php-cli:
+    image: exozet/php-fpm:5.5.38-sudo
+    volumes:
+      - /media/d/OpenServer/domains/asialr.da/:/var/www
+    # user: "${UID-www-data}:${GID-www-data}"
+    entrypoint: bash
+    depends_on:
+      - nginx
+  php-fpm:
+    image: exozet/php-fpm:7.1.10
+    volumes:
+      - ./:/usr/src/app
+  nginx:
+    image: nginx:1.11.10
+    depends_on:
+      - php-fpm
+    ports:
+      - "8080:8080"
+    volumes:
+      - /media/d/OpenServer/domains/asialr.da/:/var/www
+      # - ./deploy/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./deploy/vhost.conf:/etc/nginx/conf.d/default.conf
