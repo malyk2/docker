@@ -28,19 +28,6 @@ services:
             - "REDIS_HOST=cache"
         extra_hosts:
             - "parity.dda:172.24.0.1"
-    # cron:
-    #     build:
-    #         context: ./
-    #         dockerfile: deploy/cron.docker
-    #     volumes:
-    #         - /media/d/OpenServer/domains/api.dereban.da/:/var/www
-    #     links:
-    #         - database
-    #     environment:
-    #         - "DB_PORT=3306"
-    #         - "DB_HOST=database"
-    #         - "REDIS_PORT=6379"
-    #         - "REDIS_HOST=cache"
     database:
         image: mysql:5.7
         environment:
