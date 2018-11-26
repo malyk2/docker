@@ -1,8 +1,1 @@
 FROM mysql:5.6
-
-ADD ./deploy/sql.sql /tmp/sql.sql
-#ADD ./deploy/import.sh /tmp/import.sh
-#RUN sh /tmp/import.sh
-#RUN service mysql start 
-#RUN mysql -h localhost -u root -psecret dockerApp < /tmp/origin.sql
-#RUN mysql -h localhost -u root -psecret dockerApp < /tmp/origin.sql

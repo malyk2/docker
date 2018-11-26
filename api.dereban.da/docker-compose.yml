@@ -30,6 +30,8 @@ services:
             - "REDIS_HOST=cache"
         extra_hosts:
             - "api.dereban.dda:172.24.0.1"
+        # ports:
+        #     - "8999:8999"
     # cron:
     #     build:
     #         context: ./
@@ -44,9 +46,7 @@ services:
     #         - "REDIS_PORT=6379"
     #         - "REDIS_HOST=cache"
     database:
-        build:
-            context: ./
-            dockerfile: deploy/database.docker
+        image: mysql:5.6
         environment:
             - "MYSQL_ROOT_PASSWORD=secret"
             - "MYSQL_DATABASE=db"
