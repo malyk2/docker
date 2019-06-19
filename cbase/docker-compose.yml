@@ -1,0 +1,48 @@
+version: '2'
+services:
+    # web:
+    #     build:
+    #         context: ./
+    #         dockerfile: deploy/web.docker
+    #     volumes:
+    #         - /media/d/OpenServer/domains/cbase/:/var/www
+    #     ports:
+    #         - "80:80"
+    #     links:
+    #         - app
+    app:
+        build:
+            context: ./
+            dockerfile: deploy/app.docker
+        volumes:
+            - /media/d/OpenServer/domains/cbase.da/:/var/www/html
+        ports:
+            - "80:80"
+        links:
+            - database
+            - mailhog
+        environment:
+            - "DB_PORT=3306"
+            - "DB_HOST=database"
+            - "REDIS_PORT=6379"
+            - "REDIS_HOST=cache"
+    node:
+        image: node:8.12
+        volumes:
+            - /media/d/OpenServer/domains/cbase.da/:/root/project
+        tty: true
+        working_dir: /root/project
+    database:
+        image: mariadb:10.1.40
+        # image: mariadb
+        environment:
+            - "MYSQL_ROOT_PASSWORD=secret"
+            - "MYSQL_DATABASE=db"
+        ports:
+            - "33061:3306"
+    mailhog:
+            build:
+                context: ./
+                dockerfile: deploy/mailhog.docker
+            ports:
+                - "8025:8025"
